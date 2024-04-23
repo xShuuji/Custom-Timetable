@@ -29,28 +29,56 @@ for col, day in enumerate(days):
 # function to save the timetable
 def save_timetable():
     with open("timetable.txt", "w") as file:
+        # Iterate through each row in the timetable
         for row in range(len(times)):
+            # Create a list to hold the row entries
+            row_entries = []
+            # Iterate through each column in the row
             for col in range(len(days)):
-                file.write(f"{timetable[row][col].get()},")
-                file.write("\n")
+                # Get the entry data and append it to the row entries list
+                entry_data = timetable[row][col].get()
+                row_entries.append(entry_data)
+            
+            # Write the row entries to the file, joined by commas
+            file.write(",".join(row_entries))
+            # Write a newline character after each row
+            file.write("\n")
 
 # function to load the timetable
 def load_timetable():
     try:
         with open("timetable.txt", "r") as file:
+            # Read each line from the file
             for row, line in enumerate(file):
+                # Split the line into entries
                 entries = line.strip().split(",")
+                
+                # Handle missing entries
+                if len(entries) < len(days):
+                    # Fill missing entries with empty strings
+                    entries.extend([""] * (len(days) - len(entries)))
+                
+                # Check if the number of entries matches the number of columns in the timetable
+                if len(entries) != len(days):
+                    print(f"Warning: Inconsistent number of columns at line {row + 1}. Line skipped.")
+                    continue
+                
+                # Fill the timetable with the loaded entries
                 for col, entry in enumerate(entries):
+                    # Update the entry in the timetable
                     timetable[row][col].delete(0, tk.END)
                     timetable[row][col].insert(0, entry)
+                
     except FileNotFoundError:
         print("No saved timetable found.")
+    except Exception as e:
+        print(f"An error occurred while loading the timetable: {e}")
 
 # create buttons for saving and loading the timetable
 save_button = tk.Button(window, text="Save Timetable", command=save_timetable)
-save_button.grid(row=len(times) + 1, column=0, columnspan=2)
+save_button.grid(row=len(times) + 5, column=0, columnspan=2)
 
 load_button = tk.Button(window, text="Load Timetable", command=load_timetable)
-load_button.grid(row=len(times) + 1, column=3, columnspan=2)
+load_button.grid(row=len(times) + 5, column=3, columnspan=2)
 
 window.mainloop()
