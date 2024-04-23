@@ -1,5 +1,5 @@
 # Custom-Timetable
-A custom timetable for lectures using Python and the tkinter library \
+A custom timetable for lectures using Python and the tkinter library
 
 HOW TO USE: \
     - Manually enter lectures in timeslots \
