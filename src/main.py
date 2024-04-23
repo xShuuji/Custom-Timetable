@@ -21,3 +21,27 @@ for row, time in enumerate(times):
         entry = tk.Entry(window, width=20)
         entry.grid(row=row + 1, column=col + 1)
         timetable[row][col] = entry
+
+# create labels for each day of the week
+for col, day in enumerate(days):
+    tk.Label(window, text=day).grid(row=0, column=col + 1, sticky="n")
+
+# function to save the timetable
+def save_timetable():
+    with open("timetable.txt", "w") as file:
+        for row in range(len(times)):
+            for col in range(len(days)):
+                file.write(f"{timetable[row][col].get()},")
+                file.write("\n")
+
+# function to load the timetable
+def load_timetable():
+    try:
+        with open("timetable.txt", "r") as file:
+            for row, line in enumerate(file):
+                entries = line.strip().split(",")
+                for col, entry in enumerate(entries):
+                    timetable[row][col].delete(0, tk.END)
+                    timetable[row][col].insert(0, entry)
+    except FileNotFoundError:
+        print("No saved timetable found.")
