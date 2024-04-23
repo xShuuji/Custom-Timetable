@@ -3,7 +3,7 @@ import tkinter as tk
 # Create the main window
 window = tk.Tk()
 window.title("Lecture Timetable")
-window.geometry("400x300")
+window.geometry("700x160")
 
 # Create a list of days and times for the timetable
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
