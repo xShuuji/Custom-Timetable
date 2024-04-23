@@ -45,3 +45,12 @@ def load_timetable():
                     timetable[row][col].insert(0, entry)
     except FileNotFoundError:
         print("No saved timetable found.")
+
+# create buttons for saving and loading the timetable
+save_button = tk.Button(window, text="Save Timetable", command=save_timetable)
+save_button.grid(row=len(times) + 1, column=0, columnspan=2)
+
+load_button = tk.Button(window, text="Load Timetable", command=load_timetable)
+load_button.grid(row=len(times) + 1, column=3, columnspan=2)
+
+window.mainloop()
